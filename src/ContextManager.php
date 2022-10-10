@@ -10,8 +10,13 @@ class ContextManager extends FilamentManager
     /**
      * @var string|null
      */
-    public static ?string $config = null;
+    protected static ?string $config = null;
 
+    public function __construct($config)
+    {
+        static::$config = $config;
+    }
+    
     /**
      * @return Guard|null
      */
