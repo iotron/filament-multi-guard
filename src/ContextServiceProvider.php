@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
 use Iotronlab\FilamentMultiGuard\Http\Middleware\ApplyContext;
 use Livewire\Component;
 use ReflectionClass;
+use ReflectionException;
 use Symfony\Component\Finder\SplFileInfo;
 
 abstract class ContextServiceProvider extends PluginServiceProvider
@@ -54,7 +55,7 @@ abstract class ContextServiceProvider extends PluginServiceProvider
                     Route::prefix($this->contextConfig('path'))->group(function () {
                         Route::middleware($this->contextConfig('middleware.auth'))->group($this->componentRoutes());
                     });
-                });
+            });
         }
     }
 
@@ -83,7 +84,7 @@ abstract class ContextServiceProvider extends PluginServiceProvider
     }
 
     /**
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     protected function registerComponents(): void
     {

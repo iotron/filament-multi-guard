@@ -42,16 +42,26 @@ class FilamentMultiGuard
         return $this->currentContext ?? 'filament';
     }
 
+    /**
+     * @return mixed
+     */
     public function getContext()
     {
         return $this->contexts[$this->currentContext ?? 'filament'];
     }
 
+    /**
+     * @return array
+     */
     public function getContexts(): array
     {
         return $this->contexts;
     }
 
+    /**
+     * @param string $name
+     * @return $this
+     */
     public function addContext(string $name)
     {
         $context = new ContextManager();
@@ -60,6 +70,12 @@ class FilamentMultiGuard
         return $this;
     }
 
+
+    /**
+     * @param string $context
+     * @param callable $callback
+     * @return $this
+     */
     public function forContext(string $context, callable $callback)
     {
         $currentContext = Filament::currentContext();
@@ -73,6 +89,11 @@ class FilamentMultiGuard
         return $this;
     }
 
+
+    /**
+     * @param callable $callback
+     * @return $this
+     */
     public function forAllContexts(callable $callback)
     {
         $currentContext = Filament::currentContext();

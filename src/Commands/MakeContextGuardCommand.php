@@ -14,7 +14,7 @@ class MakeContextGuardCommand extends Command
     use CanManipulateFiles;
     use CanValidateInput;
 
-    protected $description = 'Create a Filament Context';
+    protected $description = 'Create a Filament Multi Guard Context';
 
     protected $signature = 'make:filament-context {name?} {--F|force}';
 
