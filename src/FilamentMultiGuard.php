@@ -64,12 +64,9 @@ class FilamentMultiGuard
      */
     public function addContext(string $name)
     {
-        $context = new ContextManager();
-        $context::$config = $name;
-        $this->contexts[$name] = $context;
+        $this->contexts[$name] = new ContextManager($name);
         return $this;
     }
-
 
     /**
      * @param string $context
