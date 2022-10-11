@@ -39,7 +39,9 @@ class FilamentGuardCommand extends Command
         $contextName = $context->afterLast('\\')->kebab();
 
         $contextNamespace = $context
+            ->prepend('/')
             ->prepend('App')
+            ->append('/')
             ->append('Middleware');
 
         $middlewareClass = $context->afterLast('\\')->append('Middleware');
