@@ -38,6 +38,11 @@ class FilamentGuardCommand extends Command
         );
         $contextName = $context->afterLast('\\')->kebab();
 
+        $contextNamespace = $context
+            ->replace('\\', '\\\\')
+            ->prepend('\\\\')
+            ->prepend('App');
+
         $middlewareClass = $context->afterLast('\\')->append('Middleware');
 
         $middlewarePath = $middlewareClass
@@ -51,7 +56,7 @@ class FilamentGuardCommand extends Command
         $this->copyStubToApp('ContextMiddleware', $middlewarePath, [
             'class' => (string) $middlewareClass,
             'name' => (string) $contextName,
-            'nameSpace' => (string) $directoryPath . '/MiddleWare'
+            'namespace' => (string) $contextNamespace,
         ]);
 
         $loginClass = $context->afterLast('\\')->append('Login');
