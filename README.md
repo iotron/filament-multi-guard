@@ -13,18 +13,12 @@ You can install the package via composer:
 composer require iotronlab/filament-multi-guard
 ```
 
-## Usage
+## Single Guard Usage
 
-This package can be used with or without extra guards. Create a new filament context with out extra guard using
+Create a new filament context with out GuardLogin and GuardMiddleware 
 
 ```bash
 php artisan make:filament-context FilamentTeams
-```
-
-To create a new context with login page and middleware
-
-```bash
-php artisan make:filament-context FilamentTeams --guard
 ```
 
 The above command will create the following files and directories:
@@ -36,6 +30,27 @@ app/FilamentTeams/Widgets/
 app/Providers/FilamentTeamsServiceProvider.php
 config/filament-teams.php
 ```
+
+## Multi Guard Usage
+
+To create a new context with GuardLogin and GuardMiddleware
+
+```bash
+php artisan make:filament-context FilamentTeams --guard
+```
+
+The above command will create the following files and directories:
+
+```
+app/FilamentTeams/Middleware/FilamentTeamsMiddleware.php
+app/FilamentTeams/Pages/
+app/FilamentTeams/Resources/
+app/FilamentTeams/Widgets/
+app/Http/Livewire/FilamentTeamsLogin.php
+app/Providers/FilamentTeamsServiceProvider.php
+config/filament-teams.php
+```
+Replace the auth login and middleware auth in the context config the generated login page and middleware.
 
 `Filament` cannot be passed as a context to this command as it is reserved for
 the default filament installation
