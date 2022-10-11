@@ -2,21 +2,21 @@
 
 namespace Iotronlab\FilamentMultiGuard\Commands;
 
-use Filament\Commands\Concerns;
 use Filament\Support\Commands\Concerns\CanManipulateFiles;
 use Filament\Support\Commands\Concerns\CanValidateInput;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Artisan;
 
-class MakeContextGuardCommand extends Command
+class FilamentContextCommand extends Command
 {
     use CanManipulateFiles;
     use CanValidateInput;
 
     protected $description = 'Create a Filament path based context';
 
-    protected $signature = 'make:filament-context {name?} {--F|force}';
+    protected $signature = 'make:filament-context {name?} {--g|guard} {--f|force}';
 
     public function handle(): int
     {
@@ -32,6 +32,15 @@ class MakeContextGuardCommand extends Command
 
         $this->info("Successfully created {$context} context!");
 
+        if ($this->option('guard')) {
+            Artisan::call(
+                'make:filament-guard',
+                $this->option('force') ?  [
+                    'name' => $context, '--force'
+                ] : ['name' => $context]
+            );
+        }
+
         return static::SUCCESS;
     }
 
@@ -43,6 +52,7 @@ class MakeContextGuardCommand extends Command
             ['required', 'not_in:filament']
         );
     }
+
 
     protected function copyStubs($context)
     {

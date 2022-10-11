@@ -9,7 +9,7 @@ class {{ class }} extends Middleware
 {
     protected function authenticate($request, array $guards): void
     {
-        $guardName = config({{ name }}'.auth.guard');
+        $guardName = config('{{ name }}.auth.guard');
         $guard = $this->auth->guard($guardName);
 
         if (!$guard->check()) {
@@ -33,6 +33,6 @@ class {{ class }} extends Middleware
 
     protected function redirectTo($request): string
     {
-        return route('filament.auth.login');
+        return route('{{ name }}.auth.login');
     }
 }

@@ -6,12 +6,12 @@ use Illuminate\Console\Command;
 use Filament\Support\Commands\Concerns\CanManipulateFiles;
 use Filament\Support\Commands\Concerns\CanValidateInput;
 
-class FilamentMiddlewareCommand extends Command
+class FilamentGuardCommand extends Command
 {
     use CanManipulateFiles;
     use CanValidateInput;
 
-    protected $signature = 'make:filament-middleware {name?} {--F|force}';
+    protected $signature = 'make:filament-guard {name?} {--f|force}';
 
     protected $description = 'Create a Filament middleware for context';
 
@@ -30,13 +30,16 @@ class FilamentMiddlewareCommand extends Command
 
     protected function copyStubs($context)
     {
-        $middlewareClass = $context->afterLast('\\')->append('Middleware');
-
+        $directoryPath = app_path(
+            (string) $context
+                ->replace('\\', '/')
+        );
         $contextName = $context->afterLast('\\')->kebab();
 
+        $middlewareClass = $context->afterLast('\\')->append('Middleware');
+
         $middlewarePath = $middlewareClass
-            ->prepend('/')
-            ->prepend(app_path('Http/Middleware'))
+            ->prepend($directoryPath . '/MiddleWare/')
             ->append('.php');
 
         if (!$this->option('force') && $this->checkForCollision([$middlewarePath])) {
@@ -45,6 +48,21 @@ class FilamentMiddlewareCommand extends Command
 
         $this->copyStubToApp('ContextMiddleware', $middlewarePath, [
             'class' => (string) $middlewareClass,
+            'name' => (string) $contextName,
+        ]);
+
+        $loginClass = $context->afterLast('\\')->append('Login');
+
+        $loginPath = $loginClass
+            ->prepend($directoryPath . '/Pages/Auth/')
+            ->append('.php');
+
+        if (!$this->option('force') && $this->checkForCollision([$loginPath])) {
+            return static::INVALID;
+        }
+
+        $this->copyStubToApp('ContextLogin', $loginPath, [
+            'class' => (string) $loginClass,
             'name' => (string) $contextName,
         ]);
     }

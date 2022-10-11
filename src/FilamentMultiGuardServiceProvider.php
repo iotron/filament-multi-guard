@@ -2,12 +2,12 @@
 
 namespace Iotronlab\FilamentMultiGuard;
 
-use Iotronlab\FilamentMultiGuard\Commands\MakeContextGuardCommand;
+use Iotronlab\FilamentMultiGuard\Commands\FilamentContextCommand;
+use Iotronlab\FilamentMultiGuard\Commands\FilamentGuardCommand;
 use Iotronlab\FilamentMultiGuard\Http\Middleware\ApplyContext;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Iotronlab\FilamentMultiGuard\Commands\FilamentMultiGuardCommand;
 
 class FilamentMultiGuardServiceProvider extends PackageServiceProvider
 {
@@ -26,7 +26,10 @@ class FilamentMultiGuardServiceProvider extends PackageServiceProvider
         $package
             ->name('filament-multi-guard')
             ->hasConfigFile()
-            ->hasCommand(MakeContextGuardCommand::class);
+            ->hasCommand([
+                FilamentContextCommand::class,
+                FilamentGuardCommand::class
+            ]);
     }
 
 
@@ -50,17 +53,4 @@ class FilamentMultiGuardServiceProvider extends PackageServiceProvider
             ApplyContext::class,
         ]);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
