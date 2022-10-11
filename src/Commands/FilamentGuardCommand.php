@@ -40,7 +40,7 @@ class FilamentGuardCommand extends Command
 
         $contextNamespace = $context
             ->replace('\\', '\\\\')
-            ->prepend('\\\\')
+            ->prepend('\\')
             ->prepend('App')
             ->append('\\')
             ->append('Middleware');
