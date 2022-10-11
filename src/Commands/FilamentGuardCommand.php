@@ -51,12 +51,13 @@ class FilamentGuardCommand extends Command
         $this->copyStubToApp('ContextMiddleware', $middlewarePath, [
             'class' => (string) $middlewareClass,
             'name' => (string) $contextName,
+            'nameSpace' => (string) $directoryPath . '/MiddleWare'
         ]);
 
         $loginClass = $context->afterLast('\\')->append('Login');
 
         $loginPath = $loginClass
-            ->prepend($directoryPath . '/Pages/Auth/')
+            ->prepend(app_path('Http/Livewire'))
             ->append('.php');
 
         if (!$this->option('force') && $this->checkForCollision([$loginPath])) {
