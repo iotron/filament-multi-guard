@@ -44,7 +44,7 @@ class FilamentContextCommand extends Command
         return static::SUCCESS;
     }
 
-    public function getContextInput(): string
+    protected function getContextInput(): string
     {
         return $this->validateInput(
             fn () => $this->argument('name') ?? $this->askRequired('Name (e.g. `FilamentTeams`)', 'name'),

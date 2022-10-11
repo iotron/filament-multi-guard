@@ -5,6 +5,8 @@ namespace Iotronlab\FilamentMultiGuard\Commands;
 use Illuminate\Console\Command;
 use Filament\Support\Commands\Concerns\CanManipulateFiles;
 use Filament\Support\Commands\Concerns\CanValidateInput;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 
 class FilamentGuardCommand extends Command
 {
@@ -65,6 +67,15 @@ class FilamentGuardCommand extends Command
             'class' => (string) $loginClass,
             'name' => (string) $contextName,
         ]);
+    }
+
+    protected function getContextInput(): string
+    {
+        return $this->validateInput(
+            fn () => $this->argument('name') ?? $this->askRequired('Name (e.g. `FilamentTeams`)', 'name'),
+            'name',
+            ['required', 'not_in:filament']
+        );
     }
 
     protected function copyStubToApp(string $stub, string $targetPath, array $replacements = []): void
