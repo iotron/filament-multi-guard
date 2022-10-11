@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }};
+namespace {{ nameSpace }};
 
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
