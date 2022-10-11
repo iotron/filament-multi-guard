@@ -1,7 +1,9 @@
 # filament-multi-guard
 
-This package allows you to register multiple filament contexts in your
-application with their own set of resources and pages
+This package allows you to register multiple filament route/path based contexts in your
+application with their own set of resources, pages, widgets and guard. The contexts can also be used on the same guard instance. eg. for role based setups.
+
+This package is derived from filament-multi-context package but doesn't include it as a dependency.
 
 ## Installation
 
