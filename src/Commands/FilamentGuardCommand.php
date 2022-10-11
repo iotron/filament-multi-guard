@@ -57,7 +57,7 @@ class FilamentGuardCommand extends Command
         $loginClass = $context->afterLast('\\')->append('Login');
 
         $loginPath = $loginClass
-            ->prepend(app_path('Http/Livewire'))
+            ->prepend(app_path('Http/Livewire/'))
             ->append('.php');
 
         if (!$this->option('force') && $this->checkForCollision([$loginPath])) {
