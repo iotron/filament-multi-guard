@@ -3,8 +3,8 @@
 namespace Iotronlab\FilamentMultiGuard\Commands;
 
 use Filament\Commands\Concerns;
-use Filament\Commands\Concerns\CanManipulateFiles;
-use Filament\Commands\Concerns\CanValidateInput;
+use Filament\Support\Commands\Concerns\CanManipulateFiles;
+use Filament\Support\Commands\Concerns\CanValidateInput;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
@@ -14,7 +14,7 @@ class MakeContextGuardCommand extends Command
     use CanManipulateFiles;
     use CanValidateInput;
 
-    protected $description = 'Create a Filament Multi Guard Context';
+    protected $description = 'Create a Filament path based context';
 
     protected $signature = 'make:filament-context {name?} {--F|force}';
 
@@ -62,15 +62,15 @@ class MakeContextGuardCommand extends Command
             ->prepend('\\\\')
             ->prepend('App');
 
-        if (! $this->option('force') && $this->checkForCollision([
-                $serviceProviderPath,
-            ])) {
+        if (!$this->option('force') && $this->checkForCollision([
+            $serviceProviderPath,
+        ])) {
             return static::INVALID;
         }
 
-        if (! $this->option('force') && $this->checkForCollision([
-                $configPath,
-            ])) {
+        if (!$this->option('force') && $this->checkForCollision([
+            $configPath,
+        ])) {
             return static::INVALID;
         }
 
@@ -93,17 +93,17 @@ class MakeContextGuardCommand extends Command
         );
 
         app(Filesystem::class)->makeDirectory($directoryPath, force: $this->option('force'));
-        app(Filesystem::class)->makeDirectory($directoryPath.'/Pages', force: $this->option('force'));
-        app(Filesystem::class)->makeDirectory($directoryPath.'/Resources', force: $this->option('force'));
-        app(Filesystem::class)->makeDirectory($directoryPath.'/Widgets', force: $this->option('force'));
+        app(Filesystem::class)->makeDirectory($directoryPath . '/Pages', force: $this->option('force'));
+        app(Filesystem::class)->makeDirectory($directoryPath . '/Resources', force: $this->option('force'));
+        app(Filesystem::class)->makeDirectory($directoryPath . '/Widgets', force: $this->option('force'));
     }
 
     protected function copyStubToApp(string $stub, string $targetPath, array $replacements = []): void
     {
         $filesystem = app(Filesystem::class);
 
-        if (! $this->fileExists($stubPath = base_path("stubs/filament/{$stub}.stub"))) {
-            $stubPath = __DIR__."/../../stubs/{$stub}.stub";
+        if (!$this->fileExists($stubPath = base_path("stubs/filament/{$stub}.stub"))) {
+            $stubPath = __DIR__ . "/../../stubs/{$stub}.stub";
         }
 
         $stub = Str::of($filesystem->get($stubPath));
@@ -117,4 +117,3 @@ class MakeContextGuardCommand extends Command
         $this->writeFile($targetPath, $stub);
     }
 }
-
