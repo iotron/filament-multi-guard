@@ -3,22 +3,28 @@
 This package allows you to register multiple filament route/path based contexts in your
 application with their own set of resources, pages, widgets and guard. The contexts can also be used on the same guard instance. eg. for role based setups.
 
-This package is derived from filament-multi-context package but doesn't include it as a dependency.
+This package is derived from [filament-multi-context](https://github.com/artificertech/filament-multi-context) package but doesn't include it as a dependency.
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require artificertech/filament-multi-context
+composer require iotronlab/filament-multi-guard
 ```
 
 ## Usage
 
-create a new filament context using
+This package can be used with or without extra guards. Create a new filament context with out extra guard using
 
 ```bash
 php artisan make:filament-context FilamentTeams
+```
+
+To create a new context with login page and middleware
+
+```bash
+php artisan make:filament-context FilamentTeams --guard
 ```
 
 The above command will create the following files and directories:
