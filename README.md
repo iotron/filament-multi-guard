@@ -16,7 +16,7 @@ composer require iotronlab/filament-multi-guard
 
 ## Single Guard Usage
 
-Create a new filament context with out GuardLogin and GuardMiddleware 
+Create a new filament context **with out GuardLogin and GuardMiddleware.** 
 
 ```bash
 php artisan make:filament-context FilamentTeams
@@ -34,7 +34,7 @@ config/filament-teams.php
 
 ## Multi Guard Usage
 
-To create a new context with GuardLogin and GuardMiddleware
+To create a new context **with GuardLogin and GuardMiddleware.**
 
 ```bash
 php artisan make:filament-context FilamentTeams --guard
@@ -84,18 +84,14 @@ Now, you can go to /{context-path}/login to login to the new context. You can re
 
 You should implement the **logout** components UserMenuItem in a service provider with Filament::serving()
 
-```
-  Filament::serving(
-            function () {
-    
-                Filament::forContext('filament-teams', function () {
-                    Filament::registerUserMenuItems([
-                        'logout' => UserMenuItem::make()->label('Log Out')->url(route('filament-teams.logout')),
-                    ]);
-
-                });
-            }
-        );
+```php
+Filament::serving(function () {
+    Filament::forContext('filament-teams', function () {
+            Filament::registerUserMenuItems([
+                'logout' => UserMenuItem::make()->label('Log Out')->url(route('filament-teams.logout')),
+                ]);
+            });
+        });
 ```
 
 ## Adding Pages/Resources to context
@@ -123,7 +119,7 @@ Pages:
 ```php
 namespace App\FilamentTeams\Resources;
 
-use Artificertech\FilamentMultiContext\Concerns\ContextualPage;
+use Iotronlab\FilamentMultiGuard\Concerns\ContextualPage;
 use Filament\Pages\Page;
 
 class Dashboard extends Page
@@ -137,7 +133,7 @@ Resources:
 ```php
 namespace App\FilamentTeams\Resources;
 
-use Artificertech\FilamentMultiContext\Concerns\ContextualResource;
+use Iotronlab\FilamentMultiGuard\Concerns\ContextualResource;
 use Filament\Resources\Resource;
 
 class UserResource extends Resource
