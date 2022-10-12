@@ -3,7 +3,8 @@
 This package allows you to register multiple filament route/path based contexts in your
 application with their own set of resources, pages, widgets and guard. The contexts can also be used on the same guard instance. eg. for role based setups.
 
-This package is derived from [filament-multi-context](https://github.com/artificertech/filament-multi-context) package but doesn't include it as a dependency.
+This package is derived from [filament-multi-context](https://github.com/artificertech/filament-multi-context) package but doesn't include it as a dependency as the 
+package doesn't support multiple guard instances.
 
 ## Installation
 
@@ -39,6 +40,12 @@ To create a new context with GuardLogin and GuardMiddleware
 php artisan make:filament-context FilamentTeams --guard
 ```
 
+or make a GuardLogin and GuardMiddleware for a already generated context
+
+```bash
+php artisan make:filament-guard FilamentTeams 
+```
+
 The above command will create the following files and directories:
 
 ```
@@ -50,7 +57,48 @@ app/Http/Livewire/FilamentTeamsLogin.php
 app/Providers/FilamentTeamsServiceProvider.php
 config/filament-teams.php
 ```
-Replace the auth login and middleware auth in the context config the generated login page and middleware.
+
+Replace the auth guard, pages login and middleware auth in the context config with the **generated login page and middleware**.
+
+```
+use App\FilamentTeams\Middleware\FilamentTeamsMiddleware;
+use App\Http\Livewire\FilamentTeamsLogin;
+
+    'auth' => [
+        'guard' => 'your-custom-guard',
+        'pages' => [
+            'login' => FilamentTeamsLogin::class,
+        ],
+    ],
+
+     'middleware' => [
+        'auth' => [
+            // Authenticate::class,
+            FilamentTeamsMiddleware::class
+        ],
+       
+    ],
+```
+
+Now, you can go to /{context-path}/login to login to the new context. You can remove the ***dashboard*** from 'pages' in the context config and implement your own dashboard.
+
+You should implement the **logout** components UserMenuItem in a service provider with Filament::serving()
+
+```
+  Filament::serving(
+            function () {
+    
+                Filament::forContext('filament-teams', function () {
+                    Filament::registerUserMenuItems([
+                        'logout' => UserMenuItem::make()->label('Log Out')->url(route('filament-teams.logout')),
+                    ]);
+
+                });
+            }
+        );
+```
+
+## Adding Pages/Resources to context
 
 `Filament` cannot be passed as a context to this command as it is reserved for
 the default filament installation
@@ -58,19 +106,19 @@ the default filament installation
 > **_Register Provider:_** Be sure to add the `FilamentTeamsServiceProvider`
 > class to your providers array in `config/app.php`
 
-You may now add filament resources in your FilamentTeams directories.
+You may now add filament resources in your FilamentTeams directories. Generate Filament pages/resources/widgets as you normally would. Move them into the context-folder 
+and update the namespace.
 
 > **_Context Traits:_** be sure to
 add the ContextualPage and ContextualResource traits to their associated classes
-inside of your context directories. (I tried really hard with v2 to make this
-unnecessary but sadly here we are). Without this when filament generates
+inside of your context directories. Without this when filament generates
 navigation links it will try to use `filament.pages.*` and
 `filament.resources.{resource}.*` instead of `{context}.pages.*` and
 `{context}.resources.{resource}.*` as the route names
 
 ### ContextualPage & ContextualResource traits
 
-Resources:
+Pages:
 
 ```php
 namespace App\FilamentTeams\Resources;
@@ -102,7 +150,7 @@ class UserResource extends Resource
 
 The `config/filament-teams.php` file contains a subset of the
 `config/filament.php` configuration file. The values in the `filament-teams.php`
-file can be adjusted and will only affect the pages, resources, and widgets for
+file can be adjusted and will only affect the pages, resources, widgets, and auth guard for
 the `filament-teams` context.
 
 Currently the configuration values that can be modified for a specific context
@@ -115,6 +163,7 @@ are:
 'resources'
 'widgets'
 'livewire'
+'auth'
 'middleware'
 ```
 
@@ -150,10 +199,10 @@ protected function componentRoutes(): callable
     }
 ```
 
-## !!! The Filament Facade
+## The Filament Facade
 
 In order for this package to work the `filament` app service has been overriden.
-Each context is represented by its own `Filament\FilamentManager` object. Within
+Each context is represented by its own `FilamentMultiGuard\ContextManager` extending `Filament\FilamentManager` object. Within
 your application calls to the filament facade (such as `Filament::serving`) will
 be proxied to the appropriate `Filament\FilamentManager` object based on the
 current context of your application (which is determined by the route of the
