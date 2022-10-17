@@ -1,10 +1,13 @@
-# [IOTRONLAB FILAMENT MULTI GUARD](https://github.com/iotronlab/filament-multi-guard)
+# **[IOTRONLAB FILAMENT MULTI GUARD](https://github.com/iotronlab/filament-multi-guard)**
 
 <p align="center">
 <a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
 <a href="https://packagist.org/packages/iotronlab/filament-multi-guard"><img src="https://img.shields.io/packagist/dt/iotronlab/filament-multi-guard" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/iotronlab/filament-multi-guard"><img src="https://img.shields.io/packagist/v/iotronlab/filament-multi-guard" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/iotronlab/filament-multi-guard"><img src="https://img.shields.io/packagist/l/iotronlab/filament-multi-guard" alt="License"></a>
+<a href="https://packagist.org/packages/iotronlab/filament-multi-guard"><img src="https://badgen.net/github/watchers/iotronlab/filament-multi-guard" alt="Watcher"></a>
+<a href="https://packagist.org/packages/iotronlab/filament-multi-guard"><img src="https://badgen.net/github/release/iotronlab/filament-multi-guard" alt="Release"></a>
+<a href="https://packagist.org/packages/iotronlab/filament-multi-guard"><img src="https://badgen.net/packagist/lang/iotronlab/filament-multi-guard" alt="Language"></a>
 </p>
 
 # filament-multi-guard
