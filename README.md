@@ -1,4 +1,4 @@
-# **[IOTRONLAB FILAMENT MULTI GUARD](https://github.com/iotronlab/filament-multi-guard)**
+# **[filament-multi-guard](https://github.com/iotronlab/filament-multi-guard)**
 
 <p align="center">
 <a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
@@ -9,8 +9,6 @@
 <a href="https://packagist.org/packages/iotronlab/filament-multi-guard"><img src="https://badgen.net/github/release/iotronlab/filament-multi-guard" alt="Release"></a>
 <a href="https://packagist.org/packages/iotronlab/filament-multi-guard"><img src="https://badgen.net/packagist/lang/iotronlab/filament-multi-guard" alt="Language"></a>
 </p>
-
-# filament-multi-guard
 
 This package allows you to register multiple filament route/path based contexts in your
 application with their own set of resources, pages, widgets and guard. The contexts can also be used on the same guard instance. eg. for role based setups.
