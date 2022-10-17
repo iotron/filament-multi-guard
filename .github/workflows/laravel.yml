@@ -13,14 +13,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [8.1, '8.0']
-        laravel: [9.*, 8.*]
+        php: ['8.0']
+        laravel: [9.*]
         dependency-version: [prefer-stable]
         include:
           - laravel: 9.*
             testbench: 7.*
-          - laravel: 8.*
-            testbench: 6.*
+
     steps:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
