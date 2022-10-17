@@ -1,9 +1,18 @@
+# [IOTRONLAB FILAMENT MULTI GUARD](https://github.com/iotronlab/filament-multi-guard)
+
+<p align="center">
+<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/iotronlab/filament-multi-guard"><img src="https://img.shields.io/packagist/dt/iotronlab/filament-multi-guard" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/iotronlab/filament-multi-guard"><img src="https://img.shields.io/packagist/v/iotronlab/filament-multi-guard" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/iotronlab/filament-multi-guard"><img src="https://img.shields.io/packagist/l/iotronlab/filament-multi-guard" alt="License"></a>
+</p>
+
 # filament-multi-guard
 
 This package allows you to register multiple filament route/path based contexts in your
 application with their own set of resources, pages, widgets and guard. The contexts can also be used on the same guard instance. eg. for role based setups.
 
-This package is derived from [filament-multi-context](https://github.com/artificertech/filament-multi-context) package but doesn't include it as a dependency as the 
+This package is derived from [filament-multi-context](https://github.com/artificertech/filament-multi-context) package but doesn't include it as a dependency as the
 package doesn't support multiple guard instances.
 
 ## Installation
@@ -16,7 +25,7 @@ composer require iotronlab/filament-multi-guard
 
 ## Single Guard Usage
 
-Create a new filament context **with out GuardLogin and GuardMiddleware.** 
+Create a new filament context **with out GuardLogin and GuardMiddleware.**
 
 ```bash
 php artisan make:filament-context FilamentTeams
@@ -76,7 +85,7 @@ use App\Http\Livewire\FilamentTeamsLogin;
             // Authenticate::class,
             FilamentTeamsMiddleware::class
         ],
-       
+   
     ],
 ```
 
@@ -102,15 +111,15 @@ the default filament installation
 > **_Register Provider:_** Be sure to add the `FilamentTeamsServiceProvider`
 > class to your providers array in `config/app.php`
 
-You may now add filament resources in your FilamentTeams directories. Generate Filament pages/resources/widgets as you normally would. Move them into the context-folder 
+You may now add filament resources in your FilamentTeams directories. Generate Filament pages/resources/widgets as you normally would. Move them into the context-folder
 and update the namespace.
 
 > **_Context Traits:_** be sure to
-add the ContextualPage and ContextualResource traits to their associated classes
-inside of your context directories. Without this when filament generates
-navigation links it will try to use `filament.pages.*` and
-`filament.resources.{resource}.*` instead of `{context}.pages.*` and
-`{context}.resources.{resource}.*` as the route names
+> add the ContextualPage and ContextualResource traits to their associated classes
+> inside of your context directories. Without this when filament generates
+> navigation links it will try to use `filament.pages.*` and
+> `filament.resources.{resource}.*` instead of `{context}.pages.*` and
+> `{context}.resources.{resource}.*` as the route names
 
 ### ContextualPage & ContextualResource traits
 
