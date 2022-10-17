@@ -74,6 +74,12 @@ app/Providers/FilamentTeamsServiceProvider.php
 config/filament-teams.php
 ```
 
+`Filament` cannot be passed as a context to this command as it is reserved for
+the default filament installation
+
+> **_Register Provider:_** Be sure to add the `FilamentTeamsServiceProvider`
+> class to your providers array in `config/app.php`
+
 Replace the auth guard, pages login and middleware auth in the context config with the **generated login page and middleware**.
 
 ```
