@@ -42,6 +42,12 @@ app/Providers/FilamentTeamsServiceProvider.php
 config/filament-teams.php
 ```
 
+`Filament` cannot be passed as a context to this command as it is reserved for
+the default filament installation
+
+> **_Register Provider:_** Be sure to add the `FilamentTeamsServiceProvider`
+> class to your providers array in `config/app.php`
+> 
 ## Multi Guard Usage
 
 To create a new context **with GuardLogin and GuardMiddleware.**
@@ -105,12 +111,6 @@ Filament::serving(function () {
 ```
 
 ## Adding Pages/Resources to context
-
-`Filament` cannot be passed as a context to this command as it is reserved for
-the default filament installation
-
-> **_Register Provider:_** Be sure to add the `FilamentTeamsServiceProvider`
-> class to your providers array in `config/app.php`
 
 You may now add filament resources in your FilamentTeams directories. Generate Filament pages/resources/widgets as you normally would. Move them into the context-folder
 and update the namespace.
