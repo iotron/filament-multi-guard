@@ -56,10 +56,10 @@ abstract class ContextServiceProvider extends PluginServiceProvider
                 ->group(function () {
                     Route::prefix($this->contextConfig('path'))->group(function () {
                         $loginPage = $this->contextConfig('auth.pages.login');
-                        $guard = $this->contextConfig('auth.guard');
+
                         if ($loginPage) {
                             Route::get('/login', $loginPage)->name('auth.login');
-
+                            $guard = $this->contextConfig('auth.guard');
                             Route::post('/logout', function (Request $request) use ($guard) {
                                 Auth::guard($guard)->logout();
                                 $request->session()->invalidate();
