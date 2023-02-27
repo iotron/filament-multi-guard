@@ -15,18 +15,11 @@ class FilamentMultiGuard
 
     protected ?string $currentContext = null;
 
-    /**
-     * @param FilamentManager $filament
-     */
     public function __construct(FilamentManager $filament)
     {
         $this->contexts['filament'] = $filament;
     }
 
-    /**
-     * @param string|null $context
-     * @return $this
-     */
     public function setContext(string $context = null)
     {
         $this->currentContext = $context;
@@ -34,45 +27,28 @@ class FilamentMultiGuard
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function currentContext(): string
     {
         return $this->currentContext ?? 'filament';
     }
 
-    /**
-     * @return mixed
-     */
     public function getContext()
     {
         return $this->contexts[$this->currentContext ?? 'filament'];
     }
 
-    /**
-     * @return array
-     */
     public function getContexts(): array
     {
         return $this->contexts;
     }
 
-    /**
-     * @param string $name
-     * @return $this
-     */
     public function addContext(string $name)
     {
-        $this->contexts[$name] = new ContextManager($name);
+        $this->contexts[$name] = new FilamentManager();
+
         return $this;
     }
 
-    /**
-     * @param string $context
-     * @param callable $callback
-     * @return $this
-     */
     public function forContext(string $context, callable $callback)
     {
         $currentContext = Filament::currentContext();
@@ -86,11 +62,6 @@ class FilamentMultiGuard
         return $this;
     }
 
-
-    /**
-     * @param callable $callback
-     * @return $this
-     */
     public function forAllContexts(callable $callback)
     {
         $currentContext = Filament::currentContext();
@@ -106,14 +77,21 @@ class FilamentMultiGuard
         return $this;
     }
 
+    public function auth(): Guard
+    {
+        $context = $this->currentContext();
+
+        return auth()->guard(config("{$context}.auth.guard", config('filament.auth.guard')));
+    }
+
     /**
      * Dynamically handle calls into the filament instance.
      *
-     * @param string $method
-     * @param array $parameters
+     * @param  string  $method
+     * @param  array  $parameters
      * @return mixed
      */
-    public function __call(string $method, array $parameters)
+    public function __call($method, $parameters)
     {
         $response = $this->forwardCallTo($this->getContext(), $method, $parameters);
 

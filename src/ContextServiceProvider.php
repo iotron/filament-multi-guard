@@ -17,12 +17,16 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Iotronlab\FilamentMultiGuard\Http\Middleware\ApplyContext;
 use Livewire\Component;
+use Livewire\Livewire;
 use ReflectionClass;
 use ReflectionException;
 use Symfony\Component\Finder\SplFileInfo;
 
 abstract class ContextServiceProvider extends PluginServiceProvider
 {
+
+    protected array $livewireComponents = [];
+
     public function packageRegistered(): void
     {
         $this->app->booting(function () {
@@ -36,6 +40,18 @@ abstract class ContextServiceProvider extends PluginServiceProvider
                 Filament::registerPages($this->getPages());
                 Filament::registerResources($this->getResources());
                 Filament::registerWidgets($this->getWidgets());
+
+                Filament::serving(function () {
+                    if (Filament::currentContext() !== static::$name) {
+                        return;
+                    }
+
+                    Filament::registerUserMenuItems($this->getUserMenuItems());
+                    Filament::registerScripts($this->getBeforeCoreScripts(), true);
+                    Filament::registerScripts($this->getScripts());
+                    Filament::registerStyles($this->getStyles());
+                    Filament::registerScriptData($this->getScriptData());
+                });
             });
         });
     }
@@ -49,25 +65,12 @@ abstract class ContextServiceProvider extends PluginServiceProvider
 
     protected function bootRoutes()
     {
-        if (!($this->app instanceof CachesRoutes && $this->app->routesAreCached())) {
+        if (! ($this->app instanceof CachesRoutes && $this->app->routesAreCached())) {
             Route::domain($this->contextConfig('domain'))
-                ->middleware(array_merge([ApplyContext::class . ':' . static::$name], $this->contextConfig('middleware.base')))
-                ->name(static::$name . '.')
+                ->middleware(array_merge([ApplyContext::class.':'.static::$name], $this->contextConfig('middleware.base')))
+                ->name(static::$name.'.')
                 ->group(function () {
                     Route::prefix($this->contextConfig('path'))->group(function () {
-                        $loginPage = $this->contextConfig('auth.pages.login');
-
-                        if ($loginPage) {
-                            Route::get('/login', $loginPage)->name('auth.login');
-                            $guard = $this->contextConfig('auth.guard');
-                            Route::post('/logout', function (Request $request) use ($guard) {
-                                Auth::guard($guard)->logout();
-                                $request->session()->invalidate();
-                                $request->session()->regenerateToken();
-
-                                return redirect()->route(static::$name . '.auth.login');
-                            })->name('logout');
-                        }
                         Route::middleware($this->contextConfig('middleware.auth'))->group($this->componentRoutes());
                     });
                 });
@@ -96,6 +99,8 @@ abstract class ContextServiceProvider extends PluginServiceProvider
         parent::packageBooted();
 
         Filament::setContext();
+
+        $this->bootLivewireComponents();
     }
 
     /**
@@ -133,7 +138,7 @@ abstract class ContextServiceProvider extends PluginServiceProvider
 
         $filesystem = app(Filesystem::class);
 
-        if (!$filesystem->isDirectory($directory)) {
+        if (! $filesystem->isDirectory($directory)) {
             return;
         }
         foreach ($filesystem->allFiles($directory) as $file) {
@@ -145,7 +150,7 @@ abstract class ContextServiceProvider extends PluginServiceProvider
                 continue;
             }
 
-            $filePath = Str::of($directory . '/' . $file->getRelativePathname());
+            $filePath = Str::of($directory.'/'.$file->getRelativePathname());
 
             if ($filePath->startsWith($this->contextConfig('resources.path')) && is_subclass_of($fileClass, Resource::class)) {
                 $this->resources[] = $fileClass;
@@ -169,14 +174,14 @@ abstract class ContextServiceProvider extends PluginServiceProvider
                 continue;
             }
 
-            if (!is_subclass_of($fileClass, Component::class)) {
+            if (! is_subclass_of($fileClass, Component::class)) {
                 continue;
             }
 
             $livewireAlias = Str::of($fileClass)
-                ->after($namespace . '\\')
+                ->after($namespace.'\\')
                 ->replace(['/', '\\'], '.')
-                ->prepend(static::$name . '.')
+                ->prepend(static::$name.'.')
                 ->explode('.')
                 ->map([Str::class, 'kebab'])
                 ->implode('.');
@@ -197,7 +202,7 @@ abstract class ContextServiceProvider extends PluginServiceProvider
 
         $filesystem = app(Filesystem::class);
 
-        if (!$filesystem->exists($directory)) {
+        if (! $filesystem->exists($directory)) {
             return;
         }
 
@@ -209,7 +214,7 @@ abstract class ContextServiceProvider extends PluginServiceProvider
                         ->append('\\', $file->getRelativePathname())
                         ->replace(['/', '.php'], ['\\', '']);
                 })
-                ->filter(fn (string $class): bool => is_subclass_of($class, $baseClass) && (!(new ReflectionClass($class))->isAbstract()))
+                ->filter(fn (string $class): bool => is_subclass_of($class, $baseClass) && (! (new ReflectionClass($class))->isAbstract()))
                 ->all(),
         );
     }
@@ -218,4 +223,13 @@ abstract class ContextServiceProvider extends PluginServiceProvider
     {
         return Arr::get(config(static::$name), $key, $default);
     }
+
+    protected function bootLivewireComponents(): void
+    {
+        foreach ($this->livewireComponents as $alias => $class) {
+            Livewire::component($alias, $class);
+        }
+    }
+
+
 }

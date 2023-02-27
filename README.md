@@ -47,7 +47,7 @@ the default filament installation
 
 > **_Register Provider:_** Be sure to add the `FilamentTeamsServiceProvider`
 > class to your providers array in `config/app.php`
-> 
+
 ## Multi Guard Usage
 
 To create a new context **with GuardLogin and GuardMiddleware.**
