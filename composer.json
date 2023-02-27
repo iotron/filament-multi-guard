@@ -49,8 +49,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Iotronlab\\FilamentMultiGuard\\Tests\\": "tests",
-            "Iotronlab\\FilamentMultiGuard\\Database\\Factories\\": "database/factories"
+            "Iotronlab\\FilamentMultiGuard\\Tests\\": "tests"
         }
     },
     "scripts": {
