@@ -4,6 +4,7 @@ namespace Iotronlab\FilamentMultiGuard;
 
 use Filament\Facades\Filament;
 use Filament\FilamentManager;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Traits\ForwardsCalls;
 
 class FilamentMultiGuard
