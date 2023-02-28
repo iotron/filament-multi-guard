@@ -20,7 +20,6 @@ class FilamentMultiGuardServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('filament-multi-guard')
-            ->hasConfigFile()
             ->hasCommands([
                 FilamentContextCommand::class,
                 FilamentGuardCommand::class

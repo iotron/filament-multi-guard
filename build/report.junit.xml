@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="2.083972">
-    <testsuite name="P\Tests\ExampleTest" file="C:\xampp\htdocs\Github\Iotronlab\filament-multi-guard\vendor\pestphp\pest\src\Factories\TestCaseFactory.php(223) : eval()'d code" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="2.083972">
-      <testcase name="it can test" assertions="1" time="2.083972"/>
+  <testsuite name="" tests="10" assertions="18" errors="0" warnings="0" failures="0" skipped="0" time="3.837616">
+    <testsuite name="P\Tests\FilamentTest" file="C:\xampp\htdocs\Github\Iotronlab\filament-multi-guard\vendor\pestphp\pest\src\Factories\TestCaseFactory.php(223) : eval()'d code" tests="4" assertions="9" errors="0" warnings="0" failures="0" skipped="0" time="2.370744">
+      <testcase name="it registers filament resources" assertions="3" time="1.434344"/>
+      <testcase name="it registers filament pages" assertions="3" time="0.370109"/>
+      <testcase name="it returns filament configured guard" assertions="1" time="0.054357"/>
+      <testcase name="it registers filament relation managers" assertions="2" time="0.511934"/>
+    </testsuite>
+    <testsuite name="P\Tests\FilamentMultiGuardTest" file="C:\xampp\htdocs\Github\Iotronlab\filament-multi-guard\vendor\pestphp\pest\src\Factories\TestCaseFactory.php(223) : eval()'d code" tests="6" assertions="9" errors="0" warnings="0" failures="0" skipped="0" time="1.466871">
+      <testcase name="it returns guard if one is defined" assertions="1" time="0.059746"/>
+      <testcase name="it registers filament-teams resources" assertions="2" time="0.420983"/>
+      <testcase name="it returns filament guard if none is defined" assertions="1" time="0.056600"/>
+      <testcase name="it registers filament-teams relation managers" assertions="2" time="0.505187"/>
+      <testcase name="it registers filament-teams pages" assertions="2" time="0.368820"/>
+      <testcase name="it registers filament-teams livewire component aliases" assertions="1" time="0.055534"/>
     </testsuite>
   </testsuite>
 </testsuites>
