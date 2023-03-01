@@ -20,11 +20,11 @@ jobs:
           - laravel: 10.*
             testbench: 8.*
             carbon: ^2.63
-            filament: ^2.17.8
+            filament: ^2.17
           - laravel: 9.*
             testbench: 7.*
             carbon: ^2.62.1
-            filament: ^2.17.8
+            filament: ^2.16
 
 
 
