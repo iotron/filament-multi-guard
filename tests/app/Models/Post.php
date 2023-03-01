@@ -15,17 +15,13 @@ class Post extends Model
         'body',
     ];
 
-
     protected static function newFactory()
     {
         return PostFactory::new();
     }
 
-
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
-
 }

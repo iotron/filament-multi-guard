@@ -39,12 +39,12 @@ class TestCase extends Orchestra
             FormsServiceProvider::class,
             LivewireServiceProvider::class,
             NotificationsServiceProvider::class,
-//            SpatieLaravelSettingsPluginServiceProvider::class,
-//            SpatieLaravelTranslatablePluginServiceProvider::class,
+            //            SpatieLaravelSettingsPluginServiceProvider::class,
+            //            SpatieLaravelTranslatablePluginServiceProvider::class,
             SupportServiceProvider::class,
             TablesServiceProvider::class,
 
-        ],$this->getCorePackageProviders($app)),function ($class){
+        ], $this->getCorePackageProviders($app)), function ($class) {
             return class_exists($class);
         });
     }
@@ -57,7 +57,6 @@ class TestCase extends Orchestra
         ];
     }
 
-
     /**
      * Define database migrations for testing.
      *
@@ -65,22 +64,21 @@ class TestCase extends Orchestra
      */
     protected function defineDatabaseMigrations()
     {
-        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
     }
 
     /**
      * Load Configs
-     * @param $app
+     *
      * @return void
      */
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
 
-        $app['config']->set('filament', require __DIR__ . '/config/filament.php');
+        $app['config']->set('filament', require __DIR__.'/config/filament.php');
 
-        $app['config']->set('filament-teams', require __DIR__ . '/config/filament-teams.php');
-
+        $app['config']->set('filament-teams', require __DIR__.'/config/filament-teams.php');
 
         /*
         $migration = include __DIR__.'/../database/migrations/create_filament-multi-guard_table.php.stub';

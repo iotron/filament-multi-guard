@@ -48,10 +48,10 @@ class FilamentGuardCommand extends Command
         $middlewareClass = $context->afterLast('\\')->append('Middleware');
 
         $middlewarePath = $middlewareClass
-            ->prepend($directoryPath . '/Middleware/')
+            ->prepend($directoryPath.'/Middleware/')
             ->append('.php');
 
-        if (!$this->option('force') && $this->checkForCollision([$middlewarePath])) {
+        if (! $this->option('force') && $this->checkForCollision([$middlewarePath])) {
             return static::INVALID;
         }
 
@@ -67,7 +67,7 @@ class FilamentGuardCommand extends Command
             ->prepend(app_path('Http/Livewire/'))
             ->append('.php');
 
-        if (!$this->option('force') && $this->checkForCollision([$loginPath])) {
+        if (! $this->option('force') && $this->checkForCollision([$loginPath])) {
             return static::INVALID;
         }
 
@@ -83,20 +83,19 @@ class FilamentGuardCommand extends Command
             ->append('\\')
             ->append('Pages');
 
-        if (!$this->option('force') && $this->checkForCollision([$directoryPath . '/Pages/Dashboard.php'])) {
+        if (! $this->option('force') && $this->checkForCollision([$directoryPath.'/Pages/Dashboard.php'])) {
             return static::INVALID;
         }
 
-        $this->copyStubToApp('Dashboard', $directoryPath . '/Pages/Dashboard.php', [
+        $this->copyStubToApp('Dashboard', $directoryPath.'/Pages/Dashboard.php', [
             'namespace' => (string) $dashboardNamespace,
         ]);
-
     }
 
     protected function getContextInput(): string
     {
         return $this->validateInput(
-            fn() => $this->argument('name') ?? $this->askRequired('Name (e.g. `FilamentTeams`)', 'name'),
+            fn () => $this->argument('name') ?? $this->askRequired('Name (e.g. `FilamentTeams`)', 'name'),
             'name',
             ['required', 'not_in:filament']
         );
@@ -106,8 +105,8 @@ class FilamentGuardCommand extends Command
     {
         $filesystem = app(Filesystem::class);
 
-        if (!$this->fileExists($stubPath = base_path("stubs/filament/{$stub}.stub"))) {
-            $stubPath = __DIR__ . "/../../stubs/{$stub}.stub";
+        if (! $this->fileExists($stubPath = base_path("stubs/filament/{$stub}.stub"))) {
+            $stubPath = __DIR__."/../../stubs/{$stub}.stub";
         }
 
         $stub = Str::of($filesystem->get($stubPath));
