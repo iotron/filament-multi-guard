@@ -10,7 +10,6 @@ use Livewire\Livewire;
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
 
-
 it('registers filament-teams pages', function () {
     Filament::forContext('filament-teams', function () {
         expect(Filament::getPages())->toContain(Dashboard::class);

@@ -8,10 +8,8 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
 use Filament\Tables;
 
-
 class PostsRelationManager extends RelationManager
 {
-
     protected static string $relationship = 'posts';
 
     protected static ?string $recordTitleAttribute = 'title';
@@ -46,5 +44,4 @@ class PostsRelationManager extends RelationManager
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-
 }

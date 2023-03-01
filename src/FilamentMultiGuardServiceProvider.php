@@ -11,25 +11,16 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class FilamentMultiGuardServiceProvider extends PackageServiceProvider
 {
-
-    /**
-     * @param Package $package
-     * @return void
-     */
     public function configurePackage(Package $package): void
     {
         $package
             ->name('filament-multi-guard')
             ->hasCommands([
                 FilamentContextCommand::class,
-                FilamentGuardCommand::class
+                FilamentGuardCommand::class,
             ]);
     }
 
-
-    /**
-     * @return void
-     */
     public function packageRegistered(): void
     {
         $this->app->extend('filament', function ($service, $app) {
@@ -37,10 +28,6 @@ class FilamentMultiGuardServiceProvider extends PackageServiceProvider
         });
     }
 
-
-    /**
-     * @return void
-     */
     public function packageBooted(): void
     {
         Livewire::addPersistentMiddleware([

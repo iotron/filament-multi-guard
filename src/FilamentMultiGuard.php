@@ -9,7 +9,6 @@ use Illuminate\Support\Traits\ForwardsCalls;
 
 class FilamentMultiGuard
 {
-
     use ForwardsCalls;
 
     protected array $contexts = [];
@@ -102,6 +101,4 @@ class FilamentMultiGuard
 
         return $response;
     }
-
-
 }

@@ -38,7 +38,7 @@ class FilamentGuardCommand extends Command
         );
         $contextName = $context->afterLast('\\')->kebab();
 
-        $contextNamespace = $context
+        $middlewareNamespace = $context
             ->replace('\\', '\\\\')
             ->prepend('\\')
             ->prepend('App')
@@ -48,17 +48,17 @@ class FilamentGuardCommand extends Command
         $middlewareClass = $context->afterLast('\\')->append('Middleware');
 
         $middlewarePath = $middlewareClass
-            ->prepend($directoryPath . '/MiddleWare/')
+            ->prepend($directoryPath.'/Middleware/')
             ->append('.php');
 
-        if (!$this->option('force') && $this->checkForCollision([$middlewarePath])) {
+        if (! $this->option('force') && $this->checkForCollision([$middlewarePath])) {
             return static::INVALID;
         }
 
         $this->copyStubToApp('ContextMiddleware', $middlewarePath, [
             'class' => (string) $middlewareClass,
             'name' => (string) $contextName,
-            'namespace' => (string) $contextNamespace,
+            'namespace' => (string) $middlewareNamespace,
         ]);
 
         $loginClass = $context->afterLast('\\')->append('Login');
@@ -67,13 +67,28 @@ class FilamentGuardCommand extends Command
             ->prepend(app_path('Http/Livewire/'))
             ->append('.php');
 
-        if (!$this->option('force') && $this->checkForCollision([$loginPath])) {
+        if (! $this->option('force') && $this->checkForCollision([$loginPath])) {
             return static::INVALID;
         }
 
         $this->copyStubToApp('ContextLogin', $loginPath, [
             'class' => (string) $loginClass,
             'name' => (string) $contextName,
+        ]);
+
+        $dashboardNamespace = $context
+            ->replace('\\', '\\\\')
+            ->prepend('\\')
+            ->prepend('App')
+            ->append('\\')
+            ->append('Pages');
+
+        if (! $this->option('force') && $this->checkForCollision([$directoryPath.'/Pages/Dashboard.php'])) {
+            return static::INVALID;
+        }
+
+        $this->copyStubToApp('Dashboard', $directoryPath.'/Pages/Dashboard.php', [
+            'namespace' => (string) $dashboardNamespace,
         ]);
     }
 
@@ -90,8 +105,8 @@ class FilamentGuardCommand extends Command
     {
         $filesystem = app(Filesystem::class);
 
-        if (!$this->fileExists($stubPath = base_path("stubs/filament/{$stub}.stub"))) {
-            $stubPath = __DIR__ . "/../../stubs/{$stub}.stub";
+        if (! $this->fileExists($stubPath = base_path("stubs/filament/{$stub}.stub"))) {
+            $stubPath = __DIR__."/../../stubs/{$stub}.stub";
         }
 
         $stub = Str::of($filesystem->get($stubPath));
