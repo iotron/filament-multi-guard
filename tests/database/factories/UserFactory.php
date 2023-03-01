@@ -6,14 +6,10 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Iotronlab\FilamentMultiGuard\Tests\app\Models\User;
 
-
 class UserFactory extends Factory
 {
-
     protected $model = User::class;
-    /**
-     * @return array
-     */
+
     public function definition(): array
     {
         return [
@@ -24,8 +20,4 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
         ];
     }
-
-
-
-
 }
