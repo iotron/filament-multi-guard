@@ -1,6 +1,6 @@
 <?php
 
-namespace {{namespace}};
+namespace {{ namespace }};
 
 use Filament\Pages\Dashboard as PagesDashboard;
 use Iotronlab\FilamentMultiGuard\Concerns\ContextualPage;
