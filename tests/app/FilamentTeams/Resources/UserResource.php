@@ -15,7 +15,6 @@ use Iotronlab\FilamentMultiGuard\Tests\app\Models\User;
 
 class UserResource extends Resource
 {
-
     use ContextualResource;
 
     protected static ?string $model = User::class;
@@ -66,5 +65,4 @@ class UserResource extends Resource
             PostsRelationManager::class,
         ];
     }
-
 }

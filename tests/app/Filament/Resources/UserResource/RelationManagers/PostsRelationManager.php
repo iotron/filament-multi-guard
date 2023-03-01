@@ -8,7 +8,6 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
 use Filament\Tables;
 
-
 class PostsRelationManager extends RelationManager
 {
     protected static string $relationship = 'posts';

@@ -1,6 +1,5 @@
 <?php
 
-
 use Filament\Facades\Filament;
 use Iotronlab\FilamentMultiGuard\Tests\app\Filament\Pages\Dashboard;
 use Iotronlab\FilamentMultiGuard\Tests\app\Filament\Resources\UserResource;
@@ -8,7 +7,6 @@ use Iotronlab\FilamentMultiGuard\Tests\app\Filament\Resources\UserResource\Relat
 use Iotronlab\FilamentMultiGuard\Tests\app\Models\User;
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
-
 
 it('registers filament pages', function () {
     expect(Filament::getPages())->toContain(Dashboard::class);

@@ -35,8 +35,8 @@ class FilamentContextCommand extends Command
         if ($this->option('guard')) {
             Artisan::call(
                 'make:filament-guard',
-                $this->option('force') ?  [
-                    'name' => $context, '--force'
+                $this->option('force') ? [
+                    'name' => $context, '--force',
                 ] : ['name' => $context]
             );
         }
@@ -52,7 +52,6 @@ class FilamentContextCommand extends Command
             ['required', 'not_in:filament']
         );
     }
-
 
     protected function copyStubs($context)
     {
@@ -72,13 +71,13 @@ class FilamentContextCommand extends Command
             ->prepend('\\\\')
             ->prepend('App');
 
-        if (!$this->option('force') && $this->checkForCollision([
+        if (! $this->option('force') && $this->checkForCollision([
             $serviceProviderPath,
         ])) {
             return static::INVALID;
         }
 
-        if (!$this->option('force') && $this->checkForCollision([
+        if (! $this->option('force') && $this->checkForCollision([
             $configPath,
         ])) {
             return static::INVALID;
@@ -103,17 +102,17 @@ class FilamentContextCommand extends Command
         );
 
         app(Filesystem::class)->makeDirectory($directoryPath, force: $this->option('force'));
-        app(Filesystem::class)->makeDirectory($directoryPath . '/Pages', force: $this->option('force'));
-        app(Filesystem::class)->makeDirectory($directoryPath . '/Resources', force: $this->option('force'));
-        app(Filesystem::class)->makeDirectory($directoryPath . '/Widgets', force: $this->option('force'));
+        app(Filesystem::class)->makeDirectory($directoryPath.'/Pages', force: $this->option('force'));
+        app(Filesystem::class)->makeDirectory($directoryPath.'/Resources', force: $this->option('force'));
+        app(Filesystem::class)->makeDirectory($directoryPath.'/Widgets', force: $this->option('force'));
     }
 
     protected function copyStubToApp(string $stub, string $targetPath, array $replacements = []): void
     {
         $filesystem = app(Filesystem::class);
 
-        if (!$this->fileExists($stubPath = base_path("stubs/filament/{$stub}.stub"))) {
-            $stubPath = __DIR__ . "/../../stubs/{$stub}.stub";
+        if (! $this->fileExists($stubPath = base_path("stubs/filament/{$stub}.stub"))) {
+            $stubPath = __DIR__."/../../stubs/{$stub}.stub";
         }
 
         $stub = Str::of($filesystem->get($stubPath));
