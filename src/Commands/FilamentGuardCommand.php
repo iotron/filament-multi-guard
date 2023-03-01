@@ -38,7 +38,7 @@ class FilamentGuardCommand extends Command
         );
         $contextName = $context->afterLast('\\')->kebab();
 
-        $contextNamespace = $context
+        $middlewareNamespace = $context
             ->replace('\\', '\\\\')
             ->prepend('\\')
             ->prepend('App')
@@ -48,7 +48,7 @@ class FilamentGuardCommand extends Command
         $middlewareClass = $context->afterLast('\\')->append('Middleware');
 
         $middlewarePath = $middlewareClass
-            ->prepend($directoryPath . '/MiddleWare/')
+            ->prepend($directoryPath . '/Middleware/')
             ->append('.php');
 
         if (!$this->option('force') && $this->checkForCollision([$middlewarePath])) {
@@ -58,7 +58,7 @@ class FilamentGuardCommand extends Command
         $this->copyStubToApp('ContextMiddleware', $middlewarePath, [
             'class' => (string) $middlewareClass,
             'name' => (string) $contextName,
-            'namespace' => (string) $contextNamespace,
+            'namespace' => (string) $middlewareNamespace,
         ]);
 
         $loginClass = $context->afterLast('\\')->append('Login');
@@ -75,12 +75,28 @@ class FilamentGuardCommand extends Command
             'class' => (string) $loginClass,
             'name' => (string) $contextName,
         ]);
+
+        $dashboardNamespace = $context
+            ->replace('\\', '\\\\')
+            ->prepend('\\')
+            ->prepend('App')
+            ->append('\\')
+            ->append('Pages');
+
+        if (!$this->option('force') && $this->checkForCollision([$directoryPath . '/Pages/Dashboard.php'])) {
+            return static::INVALID;
+        }
+
+        $this->copyStubToApp('Dashboard', $directoryPath . '/Pages/Dashboard.php', [
+            'namespace' => (string) $dashboardNamespace,
+        ]);
+
     }
 
     protected function getContextInput(): string
     {
         return $this->validateInput(
-            fn () => $this->argument('name') ?? $this->askRequired('Name (e.g. `FilamentTeams`)', 'name'),
+            fn() => $this->argument('name') ?? $this->askRequired('Name (e.g. `FilamentTeams`)', 'name'),
             'name',
             ['required', 'not_in:filament']
         );
