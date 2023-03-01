@@ -52,9 +52,7 @@ return [
     'pages' => [
         'namespace' => '{{ namespace }}\\Pages',
         'path' => app_path('{{ path }}/Pages'),
-        'register' => [
-            Pages\Dashboard::class,
-        ],
+        'register' => [],
     ],
 
     /*
