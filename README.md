@@ -102,7 +102,7 @@ use App\Http\Livewire\FilamentTeamsLogin;
     ],
 ```
 
-Now, you can go to /{context-path}/login to login to the new context. You can remove the ***dashboard*** from 'pages' in the context config and implement your own dashboard.
+Now, you can go to /{context-path}/login to login to the new context. You can remove the ***dashboard*** from 'pages' in the context pages folder and implement your own dashboard.
 
 You should implement the **logout** components UserMenuItem in a service provider with Filament::serving()
 
