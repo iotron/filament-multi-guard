@@ -9,6 +9,7 @@
 <a href="https://packagist.org/packages/iotronlab/filament-multi-guard"><img src="https://badgen.net/github/release/iotronlab/filament-multi-guard" alt="Release"></a>
 <a href="https://packagist.org/packages/iotronlab/filament-multi-guard"><img src="https://badgen.net/packagist/lang/iotronlab/filament-multi-guard" alt="Language"></a>
 </p>
+## This features have been natively added to Filament v3. Use this package for v2 only!
 
 This package allows you to register multiple filament route/path based contexts in your
 application with their own set of resources, pages, widgets and guard. The contexts can also be used on the same guard instance. eg. for role based setups.
