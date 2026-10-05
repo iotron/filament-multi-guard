@@ -1,3 +1,15 @@
+> [!WARNING]
+> **This package is no longer maintained.**
+>
+> Filament now ships multi-guard support natively, which removes the reason this package existed.
+>
+> - **New projects** — use Filament's built-in panel and guard configuration instead.
+> - **Existing projects** — nothing breaks. This repository is archived, not deleted. Every
+>   released version stays installable from Packagist, and `composer install` from an existing
+>   lock file continues to work. The final release (v1.0.1) targets **Filament v2**.
+>
+> Still maintained by us: [laravel-state-machine](https://github.com/iotron/laravel-state-machine).
+
 # **[filament-multi-guard](https://github.com/iotronlab/filament-multi-guard)**
 
 <p align="center">
